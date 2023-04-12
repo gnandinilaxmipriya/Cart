@@ -41,6 +41,7 @@ const AddProduct = () => {
       .then((result) => {
         console.log(result, "result huh bhai");
         console.log(result.data["subcategory"][0]);
+        console.log(result.data["subcategory"][1]);
         alert("Product added");
         navigate("/Home");
       })
