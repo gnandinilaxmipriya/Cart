@@ -20,10 +20,16 @@ const Forgot = () => {
     if (cpassword === password) {
       const url = `http://localhost:8080/updatePassword/${email}`;
       const list = { password: password };
-      const result = await axios.put(url, list);
-      console.log(result, "yo bro");
-      alert("Password changed!");
-      navigate("/");
+      await axios
+        .put(url, list)
+        .then((result) => {
+          console.log(result, "yo bro");
+          alert("Password changed!");
+          navigate("/");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } else {
       alert("password doesn't match");
     }

@@ -6,13 +6,17 @@ import "./App.css";
 import Signup from "./Signup";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Products from "./Products";
 import Cart from "./Cart";
-import NavBar from "./components/NavBar.js";
+import NavBar from "./components/NaviBar.js";
 import Profile from "./Profile";
 import UpdateProfile from "./UpdateProfile";
 import UserContext from "./userContext";
 import Forgot from "./Forgot";
+import Home from "./Home";
+import UpdateProduct from "./UpdateProduct";
+import AddProduct from "./AddProduct";
+import ViewProductById from "./ViewProductById";
+import Category from "./Category";
 function App() {
   const [cuser, setCuser] = useState(null);
   const providerValue = useMemo(() => ({ cuser, setCuser }), [cuser, setCuser]);
@@ -28,11 +32,11 @@ function App() {
 
             <Route
               exact
-              path="/Products"
+              path="/Home"
               element={
                 <>
                   <NavBar />
-                  <Products />
+                  <Home />
                 </>
               }
             />
@@ -63,6 +67,46 @@ function App() {
                 <>
                   <NavBar />
                   <UpdateProfile />
+                </>
+              }
+            />
+            <Route
+              exact
+              path="/UpdateProduct"
+              element={
+                <>
+                  <NavBar />
+                  <UpdateProduct />
+                </>
+              }
+            />
+            <Route
+              exact
+              path="/AddProduct"
+              element={
+                <>
+                  <NavBar />
+                  <AddProduct />
+                </>
+              }
+            />
+            <Route
+              exact
+              path="/ViewProductById"
+              element={
+                <>
+                  <NavBar />
+                  <ViewProductById />
+                </>
+              }
+            />
+            <Route
+              exact
+              path="/Category"
+              element={
+                <>
+                  <NavBar />
+                  <Category />
                 </>
               }
             />

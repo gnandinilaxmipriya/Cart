@@ -8,6 +8,7 @@ import Form from "react-bootstrap/Form";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
+import validator from "validator";
 const Profile = () => {
   const { cuser } = useContext(UserContext);
   let navigate = useNavigate();
@@ -25,22 +26,28 @@ const Profile = () => {
 
   const showProfile = async () => {
     const url = `http://localhost:8080/viewprofile/${cuser}`;
-    const r = await axios.get(url);
-    // console.log(r.data);
-    const result = r.data;
-    console.log(result[0], "only data with result");
-    // console.log(result[0]["address"]["id"], "address id");
+    await axios
+      .get(url)
+      .then((r) => {
+        // console.log(r.data);
+        const result = r.data;
+        console.log(result[0], "only data with result");
+        // console.log(result[0]["address"]["id"], "address id");
 
-    setUname(result[0]["uname"]);
-    setPhone(result[0]["phone"]);
-    setEmail(cuser);
-    if (result[0]["address"] !== null) {
-      setAid(result[0]["address"]["id"]);
-      setStreet(result[0]["address"]["street"]);
-      setCity(result[0]["address"]["city"]);
-      setState(result[0]["address"]["state"]);
-      setPincode(result[0]["address"]["pincode"]);
-    }
+        setUname(result[0]["uname"]);
+        setPhone(result[0]["phone"]);
+        setEmail(cuser);
+        if (result[0]["address"] !== null) {
+          setAid(result[0]["address"]["id"]);
+          setStreet(result[0]["address"]["street"]);
+          setCity(result[0]["address"]["city"]);
+          setState(result[0]["address"]["state"]);
+          setPincode(result[0]["address"]["pincode"]);
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -58,11 +65,15 @@ const Profile = () => {
         pincode: pincode,
       },
     };
-    const url = `http://localhost:8080/updateProfile/${cuser}`;
-    const res = await axios.put(url, list);
-    console.log(res);
-    alert("profile updated");
-    navigate("/Profile");
+    if (validator.isMobilePhone(phone) && phone.length === 10) {
+      const url = `http://localhost:8080/updateProfile/${cuser}`;
+      const res = await axios.put(url, list);
+      console.log(res);
+      alert("profile updated");
+      navigate("/Profile");
+    } else {
+      alert("check phone number");
+    }
   };
 
   return (

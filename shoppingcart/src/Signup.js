@@ -5,6 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
+
 const Login = () => {
   const [uname, setUname] = useState("");
   const [email, setEmail] = useState("");
@@ -12,7 +13,7 @@ const Login = () => {
   const [cpassword, setCpassword] = useState("");
   const user = { uname, email, password };
   let navigate = useNavigate();
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     console.log(
       uname,
@@ -27,20 +28,37 @@ const Login = () => {
 
     if (password === cpassword) {
       const url = `http://localhost:8080/active/${email}`;
-      const r = await axios.get(url);
-      const result = r.data;
-      console.log(result);
-      if (result === false) {
-        await axios.post("http://localhost:8080/add", user);
-        alert("Registered!");
-        navigate("/Login");
-      } else {
-        alert("user already exists, sign up with a new email !");
-        setUname("");
-        setEmail("");
-        setPassword("");
-        setCpassword("");
-      }
+      axios
+        .get(url)
+        .then((r) => {
+          const result = r.data;
+          console.log(result);
+          if (result === false) {
+            axios.post("http://localhost:8080/add", user);
+            alert("Registered!");
+            navigate("/Login");
+          } else {
+            alert("user already exists, sign up with a new email !");
+            setUname("");
+            setEmail("");
+            setPassword("");
+            setCpassword("");
+          }
+        })
+        .catch((error) => {
+          // console.log(
+          //   error["response"]["data"]["message"],
+          //   "erororororor bhai"
+          // );
+          console.log(error);
+          // alert(
+          //   `${error["response"]["data"]["message"]}sign up with a new email !`
+          // );
+          // setUname("");
+          // setEmail("");
+          // setPassword("");
+          // setCpassword("");
+        });
     } else {
       alert("password doesn't match");
     }

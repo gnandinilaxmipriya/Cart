@@ -7,6 +7,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useContext } from "react";
 import UserContext from "./userContext";
+// import Alert from "react-bootstrap/Alert";
 const Login = () => {
   const [change, setChange] = useState(true);
   const [email, setEmail] = useState("");
@@ -33,28 +34,22 @@ const Login = () => {
     console.log(password, "password");
 
     const url = `http://localhost:8080/validate/${email}/${password}`;
-    const r = await axios.get(url);
-    // setResult(r.data);
-    console.log(r.data, "yayayyaya");
-    const result = r.data;
-    if (result) {
-      setCuser(email);
-      navigate("/Products");
-    } else {
-      alert("User doesn't exists or check password");
-    }
-    // console.log(result);
-
-    // console.log(result[0]["email"], "with usestate");
-    // const bemail = result[0]["email"];
-    // const bpassword = result[0]["password"];
-    // if (bemail === email && bpassword === password) {
-    //   // setToken(true);
-    //   console.log("successful");
-    // } else {
-    //   // setToken(false);
-    //   alert("in valid ");
-    // }
+    await axios
+      .get(url)
+      .then((r) => {
+        console.log(r.data, "yayayyaya");
+        const result = r.data;
+        if (result) {
+          setCuser(email);
+          navigate("/Home");
+        } else {
+          alert("User doesn't exists or check password");
+          // <Alert variant="danger">User doesn't exists or check password</Alert>;
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   };
   return change === false ? (
     <Navigate to="/Signup" />
