@@ -32,7 +32,7 @@ const AddProduct = () => {
       price: price,
       details: details,
       category: category,
-      subcategory: [subcategory],
+      subcategory: subcategory,
       filepath: listingData.selectedFile,
     };
     console.log(list, "list hey meh");
@@ -48,7 +48,7 @@ const AddProduct = () => {
         console.log(error);
       });
   };
-  console.log(subcategory, "heyyy");
+  // console.log(subcategory, "heyyy");
   return (
     <div className="App mt-5 mx-5" style={{ width: "95%", height: "75%" }}>
       <Card className="mt-5 mx-5">
@@ -154,7 +154,7 @@ const AddProduct = () => {
             </Button>
             {subcategory.map((val, i) => {
               return (
-                <div key={i}>
+                <div className="mt-3 mx-5" key={i}>
                   <InputGroup>
                     <FloatingLabel
                       controlId="floatingInput"
@@ -177,8 +177,9 @@ const AddProduct = () => {
                       />
                     </FloatingLabel>
                     <Button
-                      variant="outline-secondary"
+                      variant="secondary"
                       size="sm"
+                      className="mb-3 mt-3"
                       onClick={(e) => {
                         const deleteVal = [...subcategory];
                         deleteVal.splice(i, 1);
