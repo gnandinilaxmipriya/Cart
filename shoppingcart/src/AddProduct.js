@@ -37,7 +37,7 @@ const AddProduct = () => {
     };
     console.log(list, "list hey meh");
     await axios
-      .post("http://localhost:8080/addProduct", list)
+      .post("http://localhost:8080/products/addProduct", list)
       .then((result) => {
         console.log(result, "result huh bhai");
         console.log(result.data["subcategory"][0]);

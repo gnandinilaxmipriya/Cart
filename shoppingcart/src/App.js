@@ -4,6 +4,7 @@ import "./App.css";
 // import { useState } from "react";
 // import Button from "react-bootstrap/Button";
 import Signup from "./Signup";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Cart from "./Cart";

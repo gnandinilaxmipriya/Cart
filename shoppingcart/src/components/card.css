@@ -1,0 +1,24 @@
+/* .card {
+  cursor: pointer;
+  background: rgb(241, 247, 247);
+  border-radius: 20px;
+  margin: 2rem 4rem;
+  overflow: hidden;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  padding: 1rem 2rem;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: scale(1.1);
+}
+
+.cardlist {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-evenly;
+} */
+/* .hello {
+  display: inline-flexbox;
+} */

@@ -25,9 +25,6 @@ const NavBar = () => {
                 <NavDropdown.Item as={Link} to="/AddProduct">
                   Add Product
                 </NavDropdown.Item>
-                <NavDropdown.Item as={Link} to="/UpdateProduct">
-                  Update Products
-                </NavDropdown.Item>
                 <NavDropdown.Item as={Link} to="/ViewProductById">
                   View by Product Id
                 </NavDropdown.Item>
