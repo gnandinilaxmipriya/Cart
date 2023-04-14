@@ -4,10 +4,13 @@ import UserContext from "./userContext";
 import axios from "axios";
 import ArrProducts from "./components/ArrProducts";
 import "bootstrap/dist/css/bootstrap.min.css";
-
+import Card from "react-bootstrap/Card";
 // import "./components/card.css";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 const Home = () => {
   const [result, setResult] = useState([]);
+  const { cuser } = useContext(UserContext);
   useEffect(() => {
     showProducts();
   }, []);
@@ -22,17 +25,22 @@ const Home = () => {
         console.log(error);
       });
   };
-  const { cuser } = useContext(UserContext);
+
   return (
-    <div>
-      {result.map((data, index) => {
-        return (
-          <div className="" key={index}>
-            <ArrProducts data={data} index={index} />
-          </div>
-        );
-      })}
-    </div>
+    <Card className="mt-5 mx-3">
+      <Row lg={3}>
+        {result !== null &&
+          result.map((data, index) => {
+            return (
+              <Col className="d-flex" key={index}>
+                <div key={index}>
+                  <ArrProducts data={data} index={index} mail={cuser} />
+                </div>
+              </Col>
+            );
+          })}
+      </Row>
+    </Card>
   );
 };
 
