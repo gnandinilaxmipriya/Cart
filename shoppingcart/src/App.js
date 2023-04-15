@@ -18,6 +18,7 @@ import UpdateProduct from "./UpdateProduct";
 import AddProduct from "./AddProduct";
 import ViewProductById from "./ViewProductById";
 import Category from "./Category";
+import Order from "./Order";
 function App() {
   const [cuser, setCuser] = useState(null);
   const providerValue = useMemo(() => ({ cuser, setCuser }), [cuser, setCuser]);
@@ -108,6 +109,16 @@ function App() {
                 <>
                   <NavBar />
                   <Category />
+                </>
+              }
+            />
+            <Route
+              exact
+              path="/Order"
+              element={
+                <>
+                  <NavBar />
+                  <Order />
                 </>
               }
             />

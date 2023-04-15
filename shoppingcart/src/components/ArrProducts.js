@@ -4,11 +4,18 @@ import Card from "react-bootstrap/Card";
 import "./card.css";
 import Button from "react-bootstrap/Button";
 import axios from "axios";
+import Modal from "react-bootstrap/Modal";
+import { useState } from "react";
+
 // import { useState } from "react";
 // import { useState } from "react";
 const ArrProducts = ({ data, index, mail }) => {
   // const [cartitemId, setCartitemId] = useState("");
   // const [quantity, setQuantity] = useState("");
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
   let sublist = "";
   if (data["subcategory"] !== undefined && data["subcategory"] !== null) {
     data["subcategory"].map((val) => {
@@ -82,7 +89,10 @@ const ArrProducts = ({ data, index, mail }) => {
         console.log(error);
       });
   };
-
+  const handlePop = () => {
+    console.log("hehe");
+    setShow(true);
+  };
   return (
     <>
       <div className="">
@@ -97,6 +107,7 @@ const ArrProducts = ({ data, index, mail }) => {
             src={data["filepath"]}
             style={{ width: "18rem", height: "10rem" }}
           />
+
           <Card.Body>
             <Card.Title>Details</Card.Title>
             {data["details"] !== undefined}
@@ -131,8 +142,81 @@ const ArrProducts = ({ data, index, mail }) => {
                 Add to Cart
               </Button>
             </div>
+            <div className="d-flex justify-content-center align-items-center">
+              <Button
+                variant="light"
+                type="submit"
+                onClick={() => {
+                  handlePop();
+                }}
+              ></Button>
+            </div>
           </Card.Body>
         </Card>
+        <Modal show={show} onHide={handleClose} className="col-lg mx-5 my-3">
+          <Modal.Header closeButton>
+            <Modal.Title>{data["name"]}</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Card
+              style={{ width: "18rem" }}
+              className="flex-fill col-lg mx-5 my-3"
+              key={index}
+            >
+              {data["filepath"] !== undefined}
+              <Card.Img
+                variant="top"
+                src={data["filepath"]}
+                style={{ width: "18rem", height: "10rem" }}
+              />
+
+              <Card.Body>
+                <Card.Title>Details</Card.Title>
+                {data["details"] !== undefined}
+                <Card.Text>{data["details"]}</Card.Text>
+
+                <Card.Title>Category</Card.Title>
+                {data["category"] !== undefined}
+                <Card.Text>{data["category"]}</Card.Text>
+
+                {/* {data["subcategory"] !== undefined &&
+              data["subcategory"].map((val, i) => {
+                return (
+                  <div key={i}>
+                    <Card.Title>Sub Category - {i + 1}</Card.Title>
+                    <Card.Text>{val}</Card.Text>
+                  </div>
+                );
+              })} */}
+                {data["subcategory"] !== undefined}
+                <Card.Title>Sub Category</Card.Title>
+                <Card.Text>{sublist}</Card.Text>
+                <Card.Title>Price</Card.Title>
+                <Card.Text>{data["price"]}</Card.Text>
+                <div className="d-flex justify-content-center align-items-center">
+                  <Button
+                    variant="warning"
+                    type="submit"
+                    onClick={() => {
+                      handleAddtoCart();
+                    }}
+                  >
+                    Add to Cart
+                  </Button>
+                </div>
+                <div className="d-flex justify-content-center align-items-center">
+                  <Button
+                    variant="light"
+                    type="submit"
+                    onClick={() => {
+                      handlePop();
+                    }}
+                  ></Button>
+                </div>
+              </Card.Body>
+            </Card>
+          </Modal.Body>
+        </Modal>
       </div>
     </>
   );
