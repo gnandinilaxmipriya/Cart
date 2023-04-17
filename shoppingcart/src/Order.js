@@ -4,6 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import axios from "axios";
 import OrderItems from "./components/OrderItems";
+import Card from "react-bootstrap/Card";
+import "./Main.css";
 const Order = () => {
   const location = useLocation();
   const userId = location.state["id"];
@@ -23,15 +25,26 @@ const Order = () => {
       });
   };
   return (
-    <div className="mt-5 d-flex justify-content-center align-items-center">
-      {orderList.map((val, index) => {
-        return (
-          <div key={index} className="">
-            <OrderItems userId={userId} res={val} />
-          </div>
-        );
-      })}
-    </div>
+    <>
+      <div className="mt-5 d-flex align-items-center justify-content-center">
+        {orderList.length !== 0 && <h1 className="gify">Order History</h1>}
+        {orderList.length === 0 && (
+          <h1 className="gify">Embark the journey to Joy</h1>
+        )}
+      </div>
+
+      <div className="mt-5 d-flex align-items-center justify-content-center">
+        <Card style={{ width: "18rem" }}>
+          {orderList.map((val, index) => {
+            return (
+              <div key={index} className="">
+                <OrderItems userId={userId} res={val} />
+              </div>
+            );
+          })}
+        </Card>
+      </div>
+    </>
   );
 };
 

@@ -30,8 +30,8 @@ const OrderItems = ({ userId, res, index }) => {
   return (
     <>
       <div className="mt-1">
-        <ListGroup as="ul">
-          <ListGroup.Item className="d-flex justify-content-between align-items-start">
+        <ListGroup as="ul" variant="flush">
+          <ListGroup.Item className="justify-content-center align-items-center">
             <Accordion defaultActiveKey="0" key={index}>
               <Accordion.Item eventKey={index}>
                 <Accordion.Header>

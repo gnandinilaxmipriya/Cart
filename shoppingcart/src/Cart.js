@@ -3,8 +3,9 @@ import { useContext } from "react";
 import UserContext from "./userContext";
 import Card from "react-bootstrap/Card";
 // import "./components/card.css";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
+import ListGroup from "react-bootstrap/ListGroup";
+// import Row from "react-bootstrap/Row";
+// import Col from "react-bootstrap/Col";
 import axios from "axios";
 import AllCartItems from "./components/AllCartItems";
 import Button from "react-bootstrap/esm/Button";
@@ -12,7 +13,8 @@ import Accordion from "react-bootstrap/Accordion";
 // import Offcanvas from "react-bootstrap/Offcanvas";
 import { useNavigate } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
-
+// import ListGroupItem from "react-bootstrap/esm/ListGroupItem";
+// import Alert from "react-bootstrap/Alert";
 const Cart = () => {
   const { cuser } = useContext(UserContext);
   // const [cartitemId, setCartitemId] = useState("");
@@ -27,6 +29,8 @@ const Cart = () => {
   // const [quantity, setQuantity] = useState({});
   // const [productId, setProductId] = useState({});
   // const [priceArr, setPriceArr] = useState([]);
+  const [showbuttons, setShowbuttons] = useState(false);
+  // const [palert, setPalert] = useState(false);
   let today = new Date();
   let date =
     today.getDate() + "-" + (today.getMonth() + 1) + "-" + today.getFullYear();
@@ -38,6 +42,7 @@ const Cart = () => {
   useEffect(() => {
     getAllCart();
   }, []);
+
   const getAllCart = async () => {
     let userId1;
     await axios
@@ -66,6 +71,7 @@ const Cart = () => {
       .delete(`http://localhost:8080/cart/empty/${userId}`)
       .then((res) => {
         setResult("");
+
         console.log("deleted");
       })
       .catch((error) => {
@@ -105,9 +111,9 @@ const Cart = () => {
       .catch((error) => {
         console.log(error);
       });
+    alert("Order Placed!");
   };
   const handleShow = async () => {
-    setShow(true);
     // await axios
     //   .get(`http://localhost:8080/cart/totalprice/${userId}`)
     //   .then((res) => {
@@ -117,35 +123,41 @@ const Cart = () => {
     //   .catch((error) => {
     //     console.log(error);
     //   });
-    await axios
-      .get(`http://localhost:8080/cart/getAllCart/${userId}`)
-      .then((res) => {
-        setFinalRes(res.data);
-        console.log(res.data, "after quantity change");
-      })
-      .catch((error) => {
-        console.log(error);
-      });
-    await axios
-      .get(`http://localhost:8080/cart/getProducts/${userId}`)
-      .then((res) => {
-        console.log(res, "all products of userid");
-        setFinalProduct(res.data);
-        let sum = 0;
-        let quantity = 0;
-        let price = 0;
-        res.data.map((val) => {
-          quantity = parseInt(val["quantity"]);
-          price = parseInt(val["price"]);
-          sum = sum + quantity * price;
-          console.log(quantity, " heyyeye", price);
-          return "hey";
+    if (result.length !== 0) {
+      setShow(true);
+      await axios
+        .get(`http://localhost:8080/cart/getAllCart/${userId}`)
+        .then((res) => {
+          setFinalRes(res.data);
+          console.log(res.data, "after quantity change");
+        })
+        .catch((error) => {
+          console.log(error);
         });
-        setTotalPrice(sum);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+      await axios
+        .get(`http://localhost:8080/cart/getProducts/${userId}`)
+        .then((res) => {
+          console.log(res, "all products of userid");
+          setFinalProduct(res.data);
+          let sum = 0;
+          let quantity = 0;
+          let price = 0;
+          res.data.map((val) => {
+            quantity = parseInt(val["quantity"]);
+            price = parseInt(val["price"]);
+            sum = sum + quantity * price;
+            console.log(quantity, " heyyeye", price);
+            return "hey";
+          });
+          setTotalPrice(sum);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      setShowbuttons(true);
+      setShow(false);
+    }
   };
   const handleCheckOut = () => {
     navigate("/Order", {
@@ -154,18 +166,56 @@ const Cart = () => {
   };
   return (
     <div>
-      <Card className="mt-5 mx-3">
-        <Row lg={3}>
-          {result !== "" &&
-            result.map((val, index) => {
-              return (
-                <Col className="d-flex" key={index}>
-                  <AllCartItems res={val} userId={userId} />
-                </Col>
-              );
-            })}
-        </Row>
-      </Card>
+      <div className="mt-5 mx-4 d-flex justify-content-center align-items-center">
+        <Button
+          variant="outline-light"
+          onClick={() => {
+            handleShow();
+          }}
+          disabled={showbuttons}
+        >
+          Place Order
+        </Button>
+        <Button
+          variant="outline-danger"
+          className="mx-3"
+          onClick={() => {
+            handleDeleteAllFromCart();
+          }}
+          // disabled={result.length === 0 && showbuttons}
+        >
+          Empty Cart
+        </Button>
+        <Button
+          variant="outline-light"
+          className=""
+          onClick={() => {
+            handleCheckOut();
+          }}
+        >
+          Checkout
+        </Button>
+      </div>
+      {/* <Card className="" style={{ backgroundColor: "black" }}> */}
+      <div className="mt-5">
+        {result !== "" &&
+          result.map((val, index) => {
+            return (
+              <ListGroup key={index} className="d-inline-flex" variant="flush">
+                {/* <Row className="no-gutters">
+                  <Col md="4"> */}
+                <AllCartItems
+                  res={val}
+                  userId={userId}
+                  setShowbuttons={setShowbuttons}
+                />
+                {/* </Col>
+                </Row> */}
+              </ListGroup>
+            );
+          })}
+      </div>
+      {/* </Card> */}
       <div>
         <Modal show={show} onHide={handleClose} animation={false}>
           <Modal.Header closeButton>
@@ -223,8 +273,9 @@ const Cart = () => {
             </div>
           </Modal.Footer>
         </Modal>
+        {/* {palert === true && <Alert variant="success">Order Placed!</Alert>} */}
       </div>
-      <div className=" mt-1 mx-4 col d-flex justify-content-end align-items-start">
+      {/* <div className=" mt-1 mx-4 col d-flex justify-content-end align-items-start">
         <Button
           variant="danger"
           className="mx-3 mt-5"
@@ -234,28 +285,37 @@ const Cart = () => {
         >
           Checkout
         </Button>
-      </div>
-      {result !== "" && result.length !== 0 && (
-        <div className=" mt-5 mx-4 col d-flex justify-content-end align-items-start">
-          <Button
-            variant="dark"
-            onClick={() => {
-              handleShow();
-            }}
-          >
-            Place Order
-          </Button>
-          <Button
-            variant="danger"
-            className="mx-3"
-            onClick={() => {
-              handleDeleteAllFromCart();
-            }}
-          >
-            Empty Cart
-          </Button>
-        </div>
-      )}
+      </div> */}
+      {/* {result !== "" && result.length !== 0 && ( */}
+      {/* <div className="mt-5 mx-4 d-flex justify-content-center align-items-center">
+        <Button
+          variant="outline-light"
+          onClick={() => {
+            handleShow();
+          }}
+        >
+          Place Order
+        </Button>
+        <Button
+          variant="outline-danger"
+          className="mx-3"
+          onClick={() => {
+            handleDeleteAllFromCart();
+          }}
+        >
+          Empty Cart
+        </Button>
+        <Button
+          variant="outline-light"
+          className=""
+          onClick={() => {
+            handleCheckOut();
+          }}
+        >
+          Checkout
+        </Button>
+      </div> */}
+      {/* )} */}
     </div>
   );
 };

@@ -62,87 +62,92 @@ const Profile = () => {
     <>
       {/* {console.log(phone === null ? "yes" : "No")} */}
       {console.log(res, "inside body")}
-      <div className="mt-5 mx-5" style={{ width: "95%", height: "75%" }}>
-        <Card className="mt-5 mx-5">
-          <Card.Header as="h4">User Profile</Card.Header>
-          <Card.Body className="mt-3 mx-5">
-            {res === undefined ? (
-              <Card.Text></Card.Text>
-            ) : (
-              <>
-                <Card.Text>UserID {res[0]["id"]}</Card.Text>
-                <hr />
-              </>
-            )}
-            {res === undefined ? (
-              <Card.Text></Card.Text>
-            ) : (
-              <>
-                <Card.Text>Username {res[0]["uname"]}</Card.Text>
-                <hr />
-              </>
-            )}
-            {cuser === null ? (
-              <Card.Text></Card.Text>
-            ) : (
-              <>
-                <Card.Text>Email {cuser}</Card.Text>
-                <hr />
-              </>
-            )}
-            {res === undefined || res[0]["phone"] === null ? (
-              <Card.Text></Card.Text>
-            ) : (
-              <>
-                <Card.Text>Phone {res[0]["phone"]}</Card.Text>
-                <hr />
-              </>
-            )}
-            {res === undefined || res[0]["address"] === null ? (
-              <Card.Text></Card.Text>
-            ) : (
-              <>
-                <Card.Text>Address </Card.Text>
-                <Card.Text>Street {res[0]["address"]["street"]}</Card.Text>
-                <hr />
-              </>
-            )}
-            {res === undefined || res[0]["address"] === null ? (
-              <Card.Text></Card.Text>
-            ) : (
-              <>
-                <Card.Text>City {res[0]["address"]["city"]}</Card.Text>
-                <hr />
-              </>
-            )}
-            {res === undefined || res[0]["address"] === null ? (
-              <Card.Text></Card.Text>
-            ) : (
-              <>
-                <Card.Text>State {res[0]["address"]["state"]} </Card.Text>
-                <hr />
-              </>
-            )}{" "}
-            {res === undefined || res[0]["address"] === null ? (
-              <Card.Text></Card.Text>
-            ) : (
-              <>
-                <Card.Text>Pincode {res[0]["address"]["pincode"]}</Card.Text>
-              </>
-            )}
-            <Button
-              variant="primary"
-              type="submit"
-              onClick={(e) => {
-                e.preventDefault();
-                navigate("/UpdateProfile");
-              }}
-            >
-              Update Profile
-            </Button>
-          </Card.Body>
-          {/* <Card.Footer className="text-muted"></Card.Footer> */}
-        </Card>
+      <div className="d-flex align-items-center justify-content-center">
+        <div className="mt-5 mx-5" style={{ width: "95%", height: "75%" }}>
+          <Card
+            className="mt-5 mx-5"
+            style={{ backgroundColor: "black", color: "white" }}
+          >
+            <Card.Header as="h4">User Profile</Card.Header>
+            <Card.Body className="mt-3 mx-5">
+              {res === undefined ? (
+                <Card.Text></Card.Text>
+              ) : (
+                <>
+                  <Card.Text>UserID {res[0]["id"]}</Card.Text>
+                  <hr />
+                </>
+              )}
+              {res === undefined ? (
+                <Card.Text></Card.Text>
+              ) : (
+                <>
+                  <Card.Text>Username {res[0]["uname"]}</Card.Text>
+                  <hr />
+                </>
+              )}
+              {cuser === null ? (
+                <Card.Text></Card.Text>
+              ) : (
+                <>
+                  <Card.Text>Email {cuser}</Card.Text>
+                  <hr />
+                </>
+              )}
+              {res === undefined || res[0]["phone"] === null ? (
+                <Card.Text></Card.Text>
+              ) : (
+                <>
+                  <Card.Text>Phone {res[0]["phone"]}</Card.Text>
+                  <hr />
+                </>
+              )}
+              {res === undefined || res[0]["address"] === null ? (
+                <Card.Text></Card.Text>
+              ) : (
+                <>
+                  <Card.Text>Address </Card.Text>
+                  <Card.Text>Street {res[0]["address"]["street"]}</Card.Text>
+                  <hr />
+                </>
+              )}
+              {res === undefined || res[0]["address"] === null ? (
+                <Card.Text></Card.Text>
+              ) : (
+                <>
+                  <Card.Text>City {res[0]["address"]["city"]}</Card.Text>
+                  <hr />
+                </>
+              )}
+              {res === undefined || res[0]["address"] === null ? (
+                <Card.Text></Card.Text>
+              ) : (
+                <>
+                  <Card.Text>State {res[0]["address"]["state"]} </Card.Text>
+                  <hr />
+                </>
+              )}{" "}
+              {res === undefined || res[0]["address"] === null ? (
+                <Card.Text></Card.Text>
+              ) : (
+                <>
+                  <Card.Text>Pincode {res[0]["address"]["pincode"]}</Card.Text>
+                </>
+              )}
+              <Button
+                variant="outline-primary"
+                type="submit"
+                onClick={(e) => {
+                  e.preventDefault();
+                  navigate("/UpdateProfile");
+                }}
+              >
+                Update Profile
+              </Button>
+            </Card.Body>
+            {/* <Card.Footer className="text-muted"></Card.Footer> */}
+          </Card>
+        </div>
       </div>
     </>
   );

@@ -3,7 +3,10 @@ import axios from "axios";
 import Card from "react-bootstrap/Card";
 import "./card.css";
 import Button from "react-bootstrap/Button";
-const AllCartItems = ({ res, userId }) => {
+import Accordion from "react-bootstrap/Accordion";
+import Badge from "react-bootstrap/Badge";
+import ListGroup from "react-bootstrap/ListGroup";
+const AllCartItems = ({ res, userId, setShowbuttons }) => {
   const [data, setData] = useState([]);
   const [cartItem, setCartItem] = useState([]);
   const [totalPrice, setTotalPrice] = useState("");
@@ -54,36 +57,41 @@ const AllCartItems = ({ res, userId }) => {
       quantity: quantity,
     };
     console.log(list, "already in cart");
-    if (quantity !== 1) {
-      await axios
-        .put(
-          `http://localhost:8080/cart/${userId}/delete/${data["productId"]}`,
-          list
-        )
-        .then((res) => {
-          console.log(list, "its list delete");
-          console.log(res, "hey deleted");
-          let q = res.data["quantity"];
-          let p = price;
-          let tprice = q * p;
-          setTotalPrice(tprice);
-          setQuantity(res.data["quantity"]);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+    if (data.length !== 0) {
+      if (quantity !== 1) {
+        await axios
+          .put(
+            `http://localhost:8080/cart/${userId}/delete/${data["productId"]}`,
+            list
+          )
+          .then((res) => {
+            console.log(list, "its list delete");
+            console.log(res, "hey deleted");
+            let q = res.data["quantity"];
+            let p = price;
+            let tprice = q * p;
+            setTotalPrice(tprice);
+            setQuantity(res.data["quantity"]);
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        console.log("quantity=1");
+        await axios
+          .delete(
+            `http://localhost:8080/cart/${userId}/remove/${data["productId"]}`
+          )
+          .then((res) => {
+            console.log(res, "hey");
+            setData("");
+
+            setCartItem("");
+          })
+          .then((error) => console.log(error));
+      }
     } else {
-      console.log("quantity=1");
-      await axios
-        .delete(
-          `http://localhost:8080/cart/${userId}/remove/${data["productId"]}`
-        )
-        .then((res) => {
-          console.log(res, "hey");
-          setData("");
-          setCartItem("");
-        })
-        .then((error) => console.log(error));
+      setShowbuttons(true);
     }
   };
   const handleAdd = () => {
@@ -116,26 +124,40 @@ const AllCartItems = ({ res, userId }) => {
     <>
       {data !== "" && cartItem !== "" && (
         <div className="">
-          <Card
-            style={{ width: "18rem" }}
-            className="flex-fill col-lg mx-5 my-3"
+          <ListGroup.Item
+            style={{ backgroundColor: "black" }}
+            className="mx-5 my-3"
           >
-            {data["filepath"] !== undefined}
-            <Card.Img
-              variant="top"
-              src={data["filepath"]}
-              style={{ width: "18rem", height: "10rem" }}
-            />
-            <Card.Body>
-              <Card.Title>Details</Card.Title>
-              {data["details"] !== undefined}
-              <Card.Text>{data["details"]}</Card.Text>
+            <Card style={{ width: "20rem" }} className="flex-fill col-lg  my-3">
+              {data["filepath"] !== undefined}
+              <Card.Img
+                variant="top"
+                src={data["filepath"]}
+                className="mx-3 mt-3"
+                style={{ width: "18rem", height: "10rem" }}
+              />{" "}
+              <Card.Body>
+                <Accordion>
+                  <Accordion.Item eventKey="0">
+                    {data["name"] !== undefined}
+                    <Accordion.Header>{data["name"]}</Accordion.Header>
+                    <Accordion.Body>
+                      {/* <Card.Title>Details</Card.Title> */}
+                      {data["details"] !== undefined}
+                      <Card.Text>
+                        <Badge bg="dark">Details</Badge> {data["details"]}
+                      </Card.Text>
 
-              <Card.Title>Category</Card.Title>
-              {data["category"] !== undefined}
-              <Card.Text>{data["category"]}</Card.Text>
-
-              {/* {data["subcategory"] !== undefined &&
+                      {/* <Card.Title>Category</Card.Title> */}
+                      {data["category"] !== undefined}
+                      <Card.Text>
+                        {" "}
+                        <Badge bg="dark">Category</Badge> {data["category"]}
+                      </Card.Text>
+                    </Accordion.Body>
+                  </Accordion.Item>
+                </Accordion>
+                {/* {data["subcategory"] !== undefined &&
           data["subcategory"].map((val, i) => {
             return (
               <div key={i}>
@@ -144,37 +166,44 @@ const AllCartItems = ({ res, userId }) => {
               </div>
             );
           })} */}
-              {/* {data["subcategory"] !== undefined}
+                {/* {data["subcategory"] !== undefined}
             <Card.Title>Sub Category</Card.Title>
             <Card.Text>{sublist}</Card.Text> */}
-              <Card.Title>Price</Card.Title>
-              <Card.Text>{price}</Card.Text>
-              <div className="d-flex justify-content-center align-items-center">
-                <Button
-                  variant="warning"
-                  type="submit"
-                  onClick={(e) => {
-                    handleDelete();
-                  }}
-                >
-                  -
-                </Button>
-                <Card.Title className="mx-3">{quantity}</Card.Title>
-                <Button
-                  variant="warning"
-                  type="submit"
-                  onClick={() => {
-                    handleAdd();
-                  }}
-                >
-                  +
-                </Button>
-              </div>
-              <div className="d-flex justify-content-center align-items-center mt-5">
-                <Card.Title>Total Price - {totalPrice}</Card.Title>
-              </div>
-            </Card.Body>
-          </Card>
+                {/* <Card.Title>Price</Card.Title> */}
+                <div className="d-flex justify-content-center align-items-center mt-3">
+                  {data["price"] !== undefined}
+                  <Card.Title>
+                    <Badge bg="dark">Price</Badge> {data["price"]}
+                  </Card.Title>
+                  {/* <Card.Text>{data["price"]}</Card.Text> */}
+                </div>
+                <div className="d-flex justify-content-center align-items-center mt-3">
+                  <Button
+                    variant="outline-dark"
+                    type="submit"
+                    onClick={(e) => {
+                      handleDelete();
+                    }}
+                  >
+                    -
+                  </Button>
+                  <Card.Title className="mx-3">{quantity}</Card.Title>
+                  <Button
+                    variant="outline-dark"
+                    type="submit"
+                    onClick={() => {
+                      handleAdd();
+                    }}
+                  >
+                    +
+                  </Button>
+                </div>
+                <div className="d-flex justify-content-center align-items-center mt-5">
+                  <Card.Title>Total Price - {totalPrice}</Card.Title>
+                </div>
+              </Card.Body>
+            </Card>
+          </ListGroup.Item>
         </div>
       )}
       {/* {data === "" && cartItem === "" && (

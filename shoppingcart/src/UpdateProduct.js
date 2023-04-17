@@ -10,6 +10,8 @@ import { useNavigate } from "react-router";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import InputGroup from "react-bootstrap/InputGroup";
 import axios from "axios";
+import "./AddProduct.css";
+import "./Main.css";
 // import { useLocation } from "react-router";
 import { useLocation } from "react-router-dom";
 const UpdateProduct = () => {
@@ -66,222 +68,229 @@ const UpdateProduct = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     // setFilepath(listingData.selectedFile);
-    const list = {
-      productId: productId,
-      name: name,
-      price: price,
-      details: details,
-      category: category,
-      subcategory: subcategory,
-    };
-    if (listingData.selectedFile === undefined) {
-      list["filepath"] = filepath;
-    } else {
-      list["filepath"] = listingData.selectedFile;
-    }
-    await axios
-      .put("http://localhost:8080/products/updateProduct", list)
-      .then((res) => {
-        console.log(res);
-        if (res) {
-          alert("product updated");
-          navigate("/ViewProductById");
-        } else {
-          alert("wait");
-          navigate("/updateProduct");
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (!isNaN(price)) {
+      const list = {
+        productId: productId,
+        name: name,
+        price: price,
+        details: details,
+        category: category,
+        subcategory: subcategory,
+      };
+      if (listingData.selectedFile === undefined) {
+        list["filepath"] = filepath;
+      } else {
+        list["filepath"] = listingData.selectedFile;
+      }
+      await axios
+        .put("http://localhost:8080/products/updateProduct", list)
+        .then((res) => {
+          console.log(res);
+          if (res) {
+            alert("product updated");
+            navigate("/ViewProductById");
+          } else {
+            alert("wait");
+            navigate("/updateProduct");
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
 
-    console.log(list, "list hey meh");
+      console.log(list, "list hey meh");
+    } else {
+      alert("Please enter a valid price");
+    }
   };
   // console.log(subcategory, "heyyy");
   // console.log(state, "heheh");
   return (
     <div className="App mt-5 mx-5" style={{ width: "95%", height: "75%" }}>
-      <Card className="mt-5 mx-5">
-        <Card.Header as="h4">Update Product {cuser}</Card.Header>
-        <Card.Body className="App d-flex align-items-center justify-content-center mt-3 mx-5">
-          <Form
-            className=""
-            onSubmit={(e) => {
-              handleSubmit(e);
+      {/* <Card className="mt-5 mx-5"> */}
+      {/* <Card.Header as="h4">Update Product</Card.Header> */}
+      <div className="d-flex align-items-center justify-content-center">
+        <h1 className="gify">Update Product</h1>
+      </div>
+      <div className="App d-flex align-items-center justify-content-center mt-3 mx-5">
+        <Form
+          className=""
+          onSubmit={(e) => {
+            handleSubmit(e);
+          }}
+        >
+          <Card.Img
+            variant="top"
+            src={filepath}
+            style={{ width: "70%", height: "20%" }}
+          />
+          <Form.Group
+            className="mb-3 col-lg-9 mt-5 mx-5"
+            controlId="formBasicEmail2"
+          >
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Product Name"
+              className="mb-3"
+            >
+              <Form.Control
+                type="text"
+                placeholder="Enter Product Name"
+                value={name}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setName(e.target.value);
+                }}
+                required
+              />
+            </FloatingLabel>
+          </Form.Group>
+          <Form.Group
+            className="mb-3 col-lg-9 mt-3 mx-5"
+            controlId="formBasicEmail09"
+          >
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Price"
+              className="mb-3"
+            >
+              <Form.Control
+                type="text"
+                placeholder="Enter Price"
+                value={price}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setPrice(e.target.value);
+                }}
+                required
+              />
+            </FloatingLabel>
+          </Form.Group>
+          <Form.Group
+            className="mb-3 col-lg-9 mt-3 mx-5"
+            controlId="formBasicEmail095678"
+          >
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Details"
+              className="mb-3"
+            >
+              <Form.Control
+                type="text"
+                placeholder="Enter details"
+                value={details}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setDetails(e.target.value);
+                }}
+                required
+              />
+            </FloatingLabel>
+          </Form.Group>
+
+          <Form.Group
+            className="mb-3 col-lg-9 mt-3 mx-5"
+            controlId="formBasicEmail898"
+          >
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Category"
+              className="mb-3"
+            >
+              <Form.Control
+                type="text"
+                placeholder="Enter Category"
+                value={category}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setCategory(e.target.value);
+                }}
+                required
+              />
+            </FloatingLabel>
+          </Form.Group>
+          <Button
+            variant="secondary"
+            className="mt-3"
+            onClick={() => handleAdd()}
+          >
+            Add Subcategories
+          </Button>
+          {subcategory.map((val, i) => {
+            return (
+              <div className="mt-3 mx-5" key={i}>
+                <InputGroup>
+                  <FloatingLabel
+                    controlId="floatingInput"
+                    label="Subcategory"
+                    className="mb-3 mt-3"
+                  >
+                    <Form.Control
+                      type="text"
+                      placeholder="Enter Subcategory"
+                      aria-label="Recipient's username"
+                      aria-describedby="basic-addon2"
+                      value={val}
+                      onChange={(e) => {
+                        e.preventDefault();
+                        const inputdata = [...subcategory];
+                        inputdata[i] = e.target.value;
+                        setSubcategory(inputdata);
+                      }}
+                      required
+                    />
+                  </FloatingLabel>
+                  <Button
+                    variant="secondary"
+                    size="sm"
+                    className="mb-3 mt-3"
+                    onClick={(e) => {
+                      const deleteVal = [...subcategory];
+                      deleteVal.splice(i, 1);
+                      setSubcategory(deleteVal);
+                    }}
+                  >
+                    X
+                  </Button>
+                </InputGroup>
+              </div>
+            );
+          })}
+
+          <Form.Group
+            className="mb-3 col-lg-9 mt-5 mx-5"
+            controlId="formBasicEmail6767"
+          >
+            <div className="file mx-5">
+              <FileBase64
+                type="file"
+                multiple={false}
+                onDone={({ base64 }) =>
+                  setListingData({ ...listingData, selectedFile: base64 })
+                }
+                required
+              />
+            </div>
+          </Form.Group>
+
+          <br />
+          <Button variant="outline-primary" type="submit" className="mt-3">
+            Submit
+          </Button>
+          <Button
+            variant="outline-danger"
+            type="button"
+            className="mt-3 mx-4"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/Home");
             }}
           >
-            <Card.Img
-              variant="top"
-              src={filepath}
-              style={{ width: "70%", height: "20%" }}
-            />
-            <Form.Group
-              className="mb-3 col-lg-9 mt-5 mx-5"
-              controlId="formBasicEmail2"
-            >
-              <FloatingLabel
-                controlId="floatingInput"
-                label="Product Name"
-                className="mb-3"
-              >
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Product Name"
-                  value={name}
-                  onChange={(e) => {
-                    e.preventDefault();
-                    setName(e.target.value);
-                  }}
-                  required
-                />
-              </FloatingLabel>
-            </Form.Group>
-            <Form.Group
-              className="mb-3 col-lg-9 mt-3 mx-5"
-              controlId="formBasicEmail09"
-            >
-              <FloatingLabel
-                controlId="floatingInput"
-                label="Price"
-                className="mb-3"
-              >
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Price"
-                  value={price}
-                  onChange={(e) => {
-                    e.preventDefault();
-                    setPrice(e.target.value);
-                  }}
-                  required
-                />
-              </FloatingLabel>
-            </Form.Group>
-            <Form.Group
-              className="mb-3 col-lg-9 mt-3 mx-5"
-              controlId="formBasicEmail09"
-            >
-              <FloatingLabel
-                controlId="floatingInput"
-                label="Details"
-                className="mb-3"
-              >
-                <Form.Control
-                  type="text"
-                  placeholder="Enter details"
-                  value={details}
-                  onChange={(e) => {
-                    e.preventDefault();
-                    setDetails(e.target.value);
-                  }}
-                  required
-                />
-              </FloatingLabel>
-            </Form.Group>
-
-            <Form.Group
-              className="mb-3 col-lg-9 mt-3 mx-5"
-              controlId="formBasicEmail898"
-            >
-              <FloatingLabel
-                controlId="floatingInput"
-                label="Category"
-                className="mb-3"
-              >
-                <Form.Control
-                  type="text"
-                  placeholder="Enter Category"
-                  value={category}
-                  onChange={(e) => {
-                    e.preventDefault();
-                    setCategory(e.target.value);
-                  }}
-                  required
-                />
-              </FloatingLabel>
-            </Form.Group>
-            <Button
-              variant="secondary"
-              className="mt-3"
-              onClick={() => handleAdd()}
-            >
-              Add Subcategories
-            </Button>
-            {subcategory.map((val, i) => {
-              return (
-                <div className="mt-3 mx-5" key={i}>
-                  <InputGroup>
-                    <FloatingLabel
-                      controlId="floatingInput"
-                      label="Subcategory"
-                      className="mb-3 mt-3"
-                    >
-                      <Form.Control
-                        type="text"
-                        placeholder="Enter Subcategory"
-                        aria-label="Recipient's username"
-                        aria-describedby="basic-addon2"
-                        value={val}
-                        onChange={(e) => {
-                          e.preventDefault();
-                          const inputdata = [...subcategory];
-                          inputdata[i] = e.target.value;
-                          setSubcategory(inputdata);
-                        }}
-                        required
-                      />
-                    </FloatingLabel>
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      className="mb-3 mt-3"
-                      onClick={(e) => {
-                        const deleteVal = [...subcategory];
-                        deleteVal.splice(i, 1);
-                        setSubcategory(deleteVal);
-                      }}
-                    >
-                      X
-                    </Button>
-                  </InputGroup>
-                </div>
-              );
-            })}
-
-            <Form.Group
-              className="mb-3 col-lg-9 mt-5 mx-5"
-              controlId="formBasicEmail6767"
-            >
-              <div className="d-flex align-items-center justify-content-center">
-                <FileBase64
-                  type="file"
-                  multiple={false}
-                  onDone={({ base64 }) =>
-                    setListingData({ ...listingData, selectedFile: base64 })
-                  }
-                  required
-                />
-              </div>
-            </Form.Group>
-
-            <br />
-            <Button variant="primary" type="submit" className="mt-3">
-              Submit
-            </Button>
-            <Button
-              variant="danger"
-              type="button"
-              className="mt-3 mx-4"
-              onClick={(e) => {
-                e.preventDefault();
-                navigate("/Home");
-              }}
-            >
-              Cancel
-            </Button>
-          </Form>
-        </Card.Body>
-      </Card>
+            Cancel
+          </Button>
+        </Form>
+      </div>
+      {/* </Card> */}
     </div>
   );
 };

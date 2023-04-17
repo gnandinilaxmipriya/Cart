@@ -6,7 +6,8 @@ import Button from "react-bootstrap/Button";
 import axios from "axios";
 import Modal from "react-bootstrap/Modal";
 import { useState } from "react";
-
+import Accordion from "react-bootstrap/Accordion";
+import Badge from "react-bootstrap/Badge";
 // import { useState } from "react";
 // import { useState } from "react";
 const ArrProducts = ({ data, index, mail }) => {
@@ -97,27 +98,48 @@ const ArrProducts = ({ data, index, mail }) => {
     <>
       <div className="">
         <Card
-          style={{ width: "18rem" }}
+          style={{ width: "19rem", backgroundColor: "white" }}
           className="flex-fill col-lg mx-5 my-3"
           key={index}
         >
           {data["filepath"] !== undefined}
-          <Card.Img
-            variant="top"
-            src={data["filepath"]}
-            style={{ width: "18rem", height: "10rem" }}
-          />
+          <Button
+            variant="outline-light"
+            type="submit"
+            onClick={() => {
+              handlePop();
+            }}
+          >
+            {" "}
+            <Card.Img
+              variant="top"
+              src={data["filepath"]}
+              style={{ width: "16rem", height: "10rem" }}
+            />
+          </Button>
 
           <Card.Body>
-            <Card.Title>Details</Card.Title>
-            {data["details"] !== undefined}
-            <Card.Text>{data["details"]}</Card.Text>
+            <Accordion>
+              <Accordion.Item eventKey="0">
+                {data["name"] !== undefined}
+                <Accordion.Header>{data["name"]}</Accordion.Header>
+                <Accordion.Body>
+                  {/* <Card.Title>Product Name</Card.Title>
 
-            <Card.Title>Category</Card.Title>
-            {data["category"] !== undefined}
-            <Card.Text>{data["category"]}</Card.Text>
+            <Card.Text></Card.Text> */}
+                  {/* <Card.Title>Details</Card.Title> */}
+                  {data["details"] !== undefined}
+                  <Card.Text>
+                    <Badge bg="dark">Details</Badge> {data["details"]}
+                  </Card.Text>
 
-            {/* {data["subcategory"] !== undefined &&
+                  {/* <Card.Title>Category</Card.Title> */}
+                  {data["category"] !== undefined}
+                  <Card.Text>
+                    <Badge bg="dark">Category</Badge> {data["category"]}
+                  </Card.Text>
+
+                  {/* {data["subcategory"] !== undefined &&
               data["subcategory"].map((val, i) => {
                 return (
                   <div key={i}>
@@ -126,14 +148,26 @@ const ArrProducts = ({ data, index, mail }) => {
                   </div>
                 );
               })} */}
-            {data["subcategory"] !== undefined}
-            <Card.Title>Sub Category</Card.Title>
-            <Card.Text>{sublist}</Card.Text>
-            <Card.Title>Price</Card.Title>
-            <Card.Text>{data["price"]}</Card.Text>
-            <div className="d-flex justify-content-center align-items-center">
+                  {data["subcategory"] !== undefined}
+                  <Card.Text>
+                    <Badge bg="dark">Sub Category</Badge>
+                  </Card.Text>
+                  <Card.Text>
+                    <Badge bg="secondary">{sublist}</Badge>
+                  </Card.Text>
+                </Accordion.Body>
+              </Accordion.Item>
+            </Accordion>
+            <div className="d-flex justify-content-center align-items-center mt-3">
+              {data["price"] !== undefined}
+              <Card.Title>
+                <Badge bg="dark">Price</Badge> {data["price"]}
+              </Card.Title>
+              {/* <Card.Text>{data["price"]}</Card.Text> */}
+            </div>
+            <div className="d-flex justify-content-center align-items-center mt-3">
               <Button
-                variant="warning"
+                variant="outline-dark"
                 type="submit"
                 onClick={() => {
                   handleAddtoCart();
@@ -157,29 +191,44 @@ const ArrProducts = ({ data, index, mail }) => {
           <Modal.Header closeButton>
             <Modal.Title>{data["name"]}</Modal.Title>
           </Modal.Header>
-          <Modal.Body>
-            <Card
-              style={{ width: "18rem" }}
-              className="flex-fill col-lg mx-5 my-3"
-              key={index}
-            >
-              {data["filepath"] !== undefined}
-              <Card.Img
-                variant="top"
-                src={data["filepath"]}
-                style={{ width: "18rem", height: "10rem" }}
-              />
+          {/* <Modal.Body> */}
+          <Card
+            style={{ width: "20rem" }}
+            className="flex-fill col-lg mx-5 my-3"
+            key={index}
+          >
+            {data["filepath"] !== undefined}
+            <Card.Img
+              variant="top"
+              src={data["filepath"]}
+              style={{ width: "20rem", height: "10rem" }}
+            />
 
-              <Card.Body>
-                <Card.Title>Details</Card.Title>
-                {data["details"] !== undefined}
-                <Card.Text>{data["details"]}</Card.Text>
+            <Card.Body>
+              {/* <Card.Title>Product Name</Card.Title>
+                {data["name"] !== undefined}
+                <Card.Text>{data["name"]}</Card.Text> */}
+              <Accordion>
+                <Accordion.Item eventKey="0">
+                  {data["name"] !== undefined}
+                  <Accordion.Header>{data["name"]}</Accordion.Header>
+                  <Accordion.Item></Accordion.Item>
+                  <Accordion.Body>
+                    {/* <Card.Title>Details</Card.Title> */}
+                    {data["details"] !== undefined}
+                    <Card.Text>
+                      <Badge bg="dark">Details</Badge>
+                      {data["details"]}
+                    </Card.Text>
 
-                <Card.Title>Category</Card.Title>
-                {data["category"] !== undefined}
-                <Card.Text>{data["category"]}</Card.Text>
+                    {/* <Card.Title>Category</Card.Title> */}
+                    {data["category"] !== undefined}
+                    <Card.Text>
+                      <Badge bg="dark">Category</Badge>
+                      {data["category"]}
+                    </Card.Text>
 
-                {/* {data["subcategory"] !== undefined &&
+                    {/* {data["subcategory"] !== undefined &&
               data["subcategory"].map((val, i) => {
                 return (
                   <div key={i}>
@@ -188,34 +237,46 @@ const ArrProducts = ({ data, index, mail }) => {
                   </div>
                 );
               })} */}
-                {data["subcategory"] !== undefined}
-                <Card.Title>Sub Category</Card.Title>
-                <Card.Text>{sublist}</Card.Text>
-                <Card.Title>Price</Card.Title>
-                <Card.Text>{data["price"]}</Card.Text>
-                <div className="d-flex justify-content-center align-items-center">
-                  <Button
-                    variant="warning"
-                    type="submit"
-                    onClick={() => {
-                      handleAddtoCart();
-                    }}
-                  >
-                    Add to Cart
-                  </Button>
-                </div>
-                <div className="d-flex justify-content-center align-items-center">
-                  <Button
-                    variant="light"
-                    type="submit"
-                    onClick={() => {
-                      handlePop();
-                    }}
-                  ></Button>
-                </div>
-              </Card.Body>
-            </Card>
-          </Modal.Body>
+                    {data["subcategory"] !== undefined}
+                    <Card.Text>
+                      <Badge bg="dark">Sub Category</Badge>
+                    </Card.Text>
+                    <Card.Text>
+                      <Badge bg="secondary">{sublist}</Badge>
+                    </Card.Text>
+                  </Accordion.Body>
+                </Accordion.Item>
+              </Accordion>
+              <div className="d-flex justify-content-center align-items-center mt-3">
+                {data["price"] !== undefined}
+                <Card.Title>
+                  <Badge bg="dark">Price</Badge> {data["price"]}
+                </Card.Title>
+                {/* <Card.Text>{data["price"]}</Card.Text> */}
+              </div>
+              <div className="d-flex justify-content-center align-items-center mt-3">
+                <Button
+                  variant="outline-dark"
+                  type="submit"
+                  onClick={() => {
+                    handleAddtoCart();
+                  }}
+                >
+                  Add to Cart
+                </Button>
+              </div>
+              <div className="d-flex justify-content-center align-items-center">
+                <Button
+                  variant="light"
+                  type="submit"
+                  onClick={() => {
+                    handlePop();
+                  }}
+                ></Button>
+              </div>
+            </Card.Body>
+          </Card>
+          {/* </Modal.Body> */}
         </Modal>
       </div>
     </>

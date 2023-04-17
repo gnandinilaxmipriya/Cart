@@ -9,6 +9,8 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useNavigate } from "react-router";
 import { useState, useEffect } from "react";
 import validator from "validator";
+import FloatingLabel from "react-bootstrap/FloatingLabel";
+import "./Main.css";
 const Profile = () => {
   const { cuser } = useContext(UserContext);
   let navigate = useNavigate();
@@ -78,9 +80,7 @@ const Profile = () => {
 
   return (
     <>
-      <h3 className="App mt-5" variant="danger">
-        Update Profile
-      </h3>
+      <h3 className="gify App mt-5">Update Profile</h3>
       <div className="App d-flex align-items-center justify-content-center mt-3">
         <Form
           className=""
@@ -92,49 +92,64 @@ const Profile = () => {
             className="mb-3 col-lg-9 mt-5 mx-5"
             controlId="formBasicEmail2"
           >
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Full Name"
-              value={uname}
-              onChange={(e) => {
-                e.preventDefault();
-                setUname(e.target.value);
-              }}
-              required
-            />
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Name"
+              className="mb-3"
+            >
+              <Form.Control
+                type="text"
+                placeholder="Enter Full Name"
+                value={uname}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setUname(e.target.value);
+                }}
+                required
+              />
+            </FloatingLabel>
           </Form.Group>
           <Form.Group
             className="col-lg-9 mt-3 mx-5"
             controlId="formBasicEmail3"
           >
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter email"
-              value={email}
-              onChange={(e) => {
-                e.preventDefault();
-                setEmail(e.target.value);
-              }}
-              required
-            />
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Email Address"
+              className="mb-3"
+            >
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setEmail(e.target.value);
+                }}
+                required
+              />
+            </FloatingLabel>
           </Form.Group>
           <Form.Group
             className="mb-3 col-lg-9  mt-3 mx-5"
             controlId="formBasicEmail2509876"
           >
-            <Form.Label>Phone Number</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Phone Number"
-              value={phone}
-              onChange={(e) => {
-                e.preventDefault();
-                setPhone(e.target.value);
-              }}
-              required
-            />
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Phone Number"
+              className="mb-3"
+            >
+              <Form.Control
+                type="text"
+                placeholder="Enter Phone Number"
+                value={phone}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setPhone(e.target.value);
+                }}
+                required
+              />
+            </FloatingLabel>
           </Form.Group>
           <Form.Group
             className="mb-3 col-lg-9 mx-5"
@@ -142,71 +157,91 @@ const Profile = () => {
           >
             {/* <Form.Label>Address</Form.Label> */}
             <br />
-            <Form.Label>Street</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter street"
-              value={Street}
-              onChange={(e) => {
-                e.preventDefault();
-                setStreet(e.target.value);
-              }}
-              required
-            />
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Street"
+              className="mb-3"
+            >
+              <Form.Control
+                type="text"
+                placeholder="Enter street"
+                value={Street}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setStreet(e.target.value);
+                }}
+                required
+              />
+            </FloatingLabel>
           </Form.Group>
           <Form.Group
             className="mb-3 col-lg-9 mx-5"
             controlId="formBasicEmail253"
           >
-            <Form.Label>City</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter City"
-              value={city}
-              onChange={(e) => {
-                e.preventDefault();
-                setCity(e.target.value);
-              }}
-              required
-            />
+            <FloatingLabel
+              controlId="floatingInput"
+              label="City"
+              className="mb-3"
+            >
+              <Form.Control
+                type="text"
+                placeholder="Enter City"
+                value={city}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setCity(e.target.value);
+                }}
+                required
+              />
+            </FloatingLabel>
           </Form.Group>
           <Form.Group
             className="mb-3 col-lg-9 mx-5"
             controlId="formBasicEmail25999"
           >
-            <Form.Label>State</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter State"
-              value={state}
-              onChange={(e) => {
-                e.preventDefault();
-                setState(e.target.value);
-              }}
-              required
-            />
+            <FloatingLabel
+              controlId="floatingInput"
+              label="State"
+              className="mb-3"
+            >
+              <Form.Control
+                type="text"
+                placeholder="Enter State"
+                value={state}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setState(e.target.value);
+                }}
+                required
+              />
+            </FloatingLabel>
           </Form.Group>
           <Form.Group
             className="mb-3 col-lg-9 mx-5"
             controlId="formBasicEmail2509"
           >
-            <Form.Label>Pincode</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Pincode"
-              value={pincode}
-              onChange={(e) => {
-                e.preventDefault();
-                setPincode(e.target.value);
-              }}
-              required
-            />
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Pincode"
+              className="mb-3"
+            >
+              <Form.Control
+                type="text"
+                placeholder="Enter Pincode"
+                value={pincode}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setPincode(e.target.value);
+                }}
+                required
+              />
+            </FloatingLabel>
           </Form.Group>
-          <Button variant="primary" type="submit" className="mt-3 mx-3">
+          <Button variant="outline-primary" type="submit" className="mt-3 mx-3">
             Submit
           </Button>
           <Button
-            variant="danger"
+            variant="outline-danger"
             type="button"
             className="mt-3 mx-1"
             onClick={(e) => {

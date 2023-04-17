@@ -5,7 +5,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
-
+import FloatingLabel from "react-bootstrap/FloatingLabel";
 const Login = () => {
   const [uname, setUname] = useState("");
   const [email, setEmail] = useState("");
@@ -79,33 +79,44 @@ const Login = () => {
             className="mb-3 col-lg-9 mt-5 mx-5"
             controlId="formBasicEmail2"
           >
-            <Form.Label>Name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Full Name"
-              value={uname}
-              onChange={(e) => {
-                e.preventDefault();
-                setUname(e.target.value);
-              }}
-              required
-            />
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Name"
+              className="mb-3"
+            >
+              <Form.Control
+                type="text"
+                placeholder="Enter Full Name"
+                value={uname}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setUname(e.target.value);
+                }}
+                required
+              />
+            </FloatingLabel>
           </Form.Group>
           <Form.Group
             className="mb-3 col-lg-9 mt-3 mx-5"
             controlId="formBasicEmail3"
           >
-            <Form.Label>Email address</Form.Label>
-            <Form.Control
-              type="email"
-              placeholder="Enter email"
-              value={email}
-              onChange={(e) => {
-                e.preventDefault();
-                setEmail(e.target.value);
-              }}
-              required
-            />
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Email"
+              className="mb-3"
+            >
+              <Form.Control
+                type="email"
+                placeholder="Enter email"
+                value={email}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setEmail(e.target.value);
+                }}
+                required
+              />
+            </FloatingLabel>
+
             <Form.Text className="text-muted">
               We'll never share your email with anyone else.
             </Form.Text>
@@ -115,40 +126,51 @@ const Login = () => {
             className="mb-3 col-lg-9 mx-5"
             controlId="formBasicPassword1"
           >
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              value={password}
-              onChange={(e) => {
-                e.preventDefault();
-                setPassword(e.target.value);
-              }}
-              required
-            />
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Password"
+              className="mb-3"
+            >
+              <Form.Control
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setPassword(e.target.value);
+                }}
+                required
+              />
+            </FloatingLabel>
           </Form.Group>
           <Form.Group
             className="mb-3 col-lg-9 mx-5"
             controlId="formBasicPassword2"
           >
-            <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Confirm Password"
-              value={cpassword}
-              onChange={(e) => {
-                e.preventDefault();
-                setCpassword(e.target.value);
-              }}
-              required
-            />
+            <FloatingLabel
+              controlId="floatingInput"
+              label="Confirm Password"
+              className="mb-3"
+            >
+              {" "}
+              <Form.Control
+                type="password"
+                placeholder="Confirm Password"
+                value={cpassword}
+                onChange={(e) => {
+                  e.preventDefault();
+                  setCpassword(e.target.value);
+                }}
+                required
+              />
+            </FloatingLabel>
           </Form.Group>
           <br />
-          <Button variant="primary" type="submit" className="mt-3">
+          <Button variant="outline-primary" type="submit" className="mt-3">
             Submit
           </Button>
           <Button
-            variant="danger"
+            variant="outline-danger"
             type="button"
             className="mt-3 mx-4"
             onClick={(e) => {

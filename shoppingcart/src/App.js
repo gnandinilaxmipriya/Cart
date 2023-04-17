@@ -19,6 +19,7 @@ import AddProduct from "./AddProduct";
 import ViewProductById from "./ViewProductById";
 import Category from "./Category";
 import Order from "./Order";
+import Main from "./Main";
 function App() {
   const [cuser, setCuser] = useState(null);
   const providerValue = useMemo(() => ({ cuser, setCuser }), [cuser, setCuser]);
@@ -27,7 +28,7 @@ function App() {
       <UserContext.Provider value={providerValue}>
         <Router>
           <Routes>
-            <Route exact path="/" element={<Login />} />
+            <Route exact path="/" element={<Main />} />
             <Route exact path="/Login" element={<Login />} />
             <Route exact path="/Signup" element={<Signup />} />
             <Route exact path="/Forgot" element={<Forgot />} />
