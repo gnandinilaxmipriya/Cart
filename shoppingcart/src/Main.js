@@ -8,7 +8,7 @@ const Main = () => {
   return (
     <div className="">
       <div className="d-flex justify-content-center align-items-center mt-5">
-        <h1 style={{ color: "whitesmoke" }}>Shop.com</h1>
+        <h1 style={{ color: "whitesmoke", marginTop: "10rem" }}>Shop.com</h1>
       </div>
 
       <div className="d-flex justify-content-center align-items-center mt-5">

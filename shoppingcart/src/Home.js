@@ -178,30 +178,34 @@ const Home = () => {
   };
   const handleShowModalFilter = async (e) => {
     e.preventDefault();
-    setShowmodal(false);
-    console.log(mcategory);
-    setResult(null);
-    setClear(false);
-    setModalFilterShow(true);
-    const list = {
-      name: mname,
-      price: mprice,
-    };
-    await axios
-      .post(`http://localhost:8080/products/searchbyboth/${mcategory}`, list)
-      .then((result) => {
-        console.log(result, "modal filter");
-        if (result.data.length === 0) {
-          setModalFilterData(null);
-          console.log("empty");
-        } else {
-          console.log(result);
-          setModalFilterData(result.data);
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+    if (!isNaN(mprice)) {
+      setShowmodal(false);
+      console.log(mcategory);
+      setResult(null);
+      setClear(false);
+      setModalFilterShow(true);
+      const list = {
+        name: mname,
+        price: mprice,
+      };
+      await axios
+        .post(`http://localhost:8080/products/searchbyboth/${mcategory}`, list)
+        .then((result) => {
+          console.log(result, "modal filter");
+          if (result.data.length === 0) {
+            setModalFilterData(null);
+            console.log("empty");
+          } else {
+            console.log(result);
+            setModalFilterData(result.data);
+          }
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      alert("enter valid price");
+    }
   };
   return (
     <>
