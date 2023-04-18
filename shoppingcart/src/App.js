@@ -20,9 +20,11 @@ import ViewProductById from "./ViewProductById";
 import Category from "./Category";
 import Order from "./Order";
 import Main from "./Main";
+
 function App() {
   const [cuser, setCuser] = useState(null);
   const providerValue = useMemo(() => ({ cuser, setCuser }), [cuser, setCuser]);
+  // const [length, setLength] = useState(0);
   return (
     <div>
       <UserContext.Provider value={providerValue}>

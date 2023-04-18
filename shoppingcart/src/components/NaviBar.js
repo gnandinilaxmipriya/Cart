@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useContext } from "react";
 import UserContext from "../userContext";
-const NavBar = () => {
+import Badge from "react-bootstrap/Badge";
+const NavBar = ({ length }) => {
   const { cuser } = useContext(UserContext);
   return (
     <>
@@ -32,6 +33,7 @@ const NavBar = () => {
               )}
               <Nav.Link as={Link} to="/Cart">
                 Cart
+                <Badge bg="dark">{length}</Badge>
               </Nav.Link>
               <NavDropdown title="Profile" id="collasible-nav-dropdown">
                 <NavDropdown.Item as={Link} to="/Profile">

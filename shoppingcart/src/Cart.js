@@ -61,6 +61,7 @@ const Cart = () => {
       .then((result) => {
         console.log(result, "cart details");
         setResult(result.data);
+        // setLength(result.data["quantity"].length);
       })
       .catch((error) => {
         console.log(error);
@@ -71,7 +72,7 @@ const Cart = () => {
       .delete(`http://localhost:8080/cart/empty/${userId}`)
       .then((res) => {
         setResult("");
-
+        // setLength(0);
         console.log("deleted");
       })
       .catch((error) => {
@@ -150,6 +151,7 @@ const Cart = () => {
             return "hey";
           });
           setTotalPrice(sum);
+          // setLength(quantity);
         })
         .catch((error) => {
           console.log(error);
@@ -208,6 +210,7 @@ const Cart = () => {
                   res={val}
                   userId={userId}
                   setShowbuttons={setShowbuttons}
+                  // setLength={setLength}
                 />
                 {/* </Col>
                 </Row> */}

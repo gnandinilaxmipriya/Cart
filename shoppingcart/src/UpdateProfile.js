@@ -55,26 +55,30 @@ const Profile = () => {
     e.preventDefault();
     console.log(cuser);
     console.log(Street, city, state, pincode, email, uname, phone, aid);
-    const list = {
-      uname: uname,
-      email: email,
-      phone: phone,
-      address: {
-        id: aid,
-        street: Street,
-        city: city,
-        state: state,
-        pincode: pincode,
-      },
-    };
-    if (validator.isMobilePhone(phone) && phone.length === 10) {
-      const url = `http://localhost:8080/updateProfile/${cuser}`;
-      const res = await axios.put(url, list);
-      console.log(res);
-      alert("profile updated");
-      navigate("/Profile");
+    if (!isNaN(pincode)) {
+      const list = {
+        uname: uname,
+        email: email,
+        phone: phone,
+        address: {
+          id: aid,
+          street: Street,
+          city: city,
+          state: state,
+          pincode: pincode,
+        },
+      };
+      if (validator.isMobilePhone(phone) && phone.length === 10) {
+        const url = `http://localhost:8080/updateProfile/${cuser}`;
+        const res = await axios.put(url, list);
+        console.log(res);
+        alert("profile updated");
+        navigate("/Profile");
+      } else {
+        alert("check phone number");
+      }
     } else {
-      alert("check phone number");
+      alert("check pincode");
     }
   };
 

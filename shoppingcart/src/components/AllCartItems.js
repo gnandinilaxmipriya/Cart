@@ -29,7 +29,7 @@ const AllCartItems = ({ res, userId, setShowbuttons }) => {
     const userId = res["userId"];
     const productId = res["productId"];
     const cartitemId = res["cartitemId"];
-
+    // setLength(quantity);
     await axios
       .get(
         `http://localhost:8080/cart/${userId}/get/${productId}/${cartitemId}`
@@ -115,6 +115,7 @@ const AllCartItems = ({ res, userId, setShowbuttons }) => {
         let tprice = q * p;
         setTotalPrice(tprice);
         setQuantity(res.data["quantity"]);
+        // setLength(res.data["quantity"]);
       })
       .catch((error) => {
         console.log(error);

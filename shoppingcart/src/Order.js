@@ -34,7 +34,7 @@ const Order = () => {
       </div>
 
       <div className="mt-5 d-flex align-items-center justify-content-center">
-        <Card style={{ width: "18rem" }}>
+        <Card style={{ width: "18rem", backgroundColor: "black" }}>
           {orderList.map((val, index) => {
             return (
               <div key={index} className="">

@@ -6,66 +6,77 @@ import { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
+import "./Main.css";
 const Login = () => {
   const [uname, setUname] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [cpassword, setCpassword] = useState("");
   const user = { uname, email, password };
+  const strongRegex = new RegExp(
+    "^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})"
+  );
   let navigate = useNavigate();
+  let test = strongRegex.test(password);
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(
-      uname,
-      " name",
-      email,
-      "email",
-      password,
-      "password",
-      cpassword,
-      "cpassword"
-    );
+    if (test) {
+      console.log(
+        uname,
+        " name",
+        email,
+        "email",
+        password,
+        "password",
+        cpassword,
+        "cpassword"
+      );
 
-    if (password === cpassword) {
-      const url = `http://localhost:8080/active/${email}`;
-      axios
-        .get(url)
-        .then((r) => {
-          const result = r.data;
-          console.log(result);
-          if (result === false) {
-            axios.post("http://localhost:8080/add", user);
-            alert("Registered!");
-            navigate("/Login");
-          } else {
-            alert("user already exists, sign up with a new email !");
-            setUname("");
-            setEmail("");
-            setPassword("");
-            setCpassword("");
-          }
-        })
-        .catch((error) => {
-          // console.log(
-          //   error["response"]["data"]["message"],
-          //   "erororororor bhai"
-          // );
-          console.log(error);
-          // alert(
-          //   `${error["response"]["data"]["message"]}sign up with a new email !`
-          // );
-          // setUname("");
-          // setEmail("");
-          // setPassword("");
-          // setCpassword("");
-        });
+      if (password === cpassword) {
+        const url = `http://localhost:8080/active/${email}`;
+        axios
+          .get(url)
+          .then((r) => {
+            const result = r.data;
+            console.log(result);
+            if (result === false) {
+              axios.post("http://localhost:8080/add", user);
+              alert("Registered!");
+              navigate("/Login");
+            } else {
+              alert("user already exists, sign up with a new email !");
+              setUname("");
+              setEmail("");
+              setPassword("");
+              setCpassword("");
+            }
+          })
+          .catch((error) => {
+            // console.log(
+            //   error["response"]["data"]["message"],
+            //   "erororororor bhai"
+            // );
+            console.log(error);
+            // alert(
+            //   `${error["response"]["data"]["message"]}sign up with a new email !`
+            // );
+            // setUname("");
+            // setEmail("");
+            // setPassword("");
+            // setCpassword("");
+          });
+      } else {
+        alert("password doesn't match");
+      }
     } else {
-      alert("password doesn't match");
+      alert(
+        "Password must be combination of lower case, upper case, special character, a number and atleast 8 characters long"
+      );
     }
   };
   return (
     <>
-      <h1 className="App mt-5" variant="danger">
+      <h1 className="App gify mt-5" variant="danger">
         Sign Up
       </h1>
       <div className="App d-flex align-items-center justify-content-center mt-3">

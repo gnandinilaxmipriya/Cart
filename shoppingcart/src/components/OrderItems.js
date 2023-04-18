@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Badge from "react-bootstrap/Badge";
 import ListGroup from "react-bootstrap/ListGroup";
 import Accordion from "react-bootstrap/Accordion";
+import "../Main.css";
 const OrderItems = ({ userId, res, index }) => {
   console.log(res, "heheh");
   const [productData, setProductData] = useState([]);
@@ -31,9 +32,16 @@ const OrderItems = ({ userId, res, index }) => {
     <>
       <div className="mt-1">
         <ListGroup as="ul" variant="flush">
-          <ListGroup.Item className="justify-content-center align-items-center">
+          <ListGroup.Item
+            className="justify-content-center align-items-center"
+            style={{ backgroundColor: "black" }}
+          >
             <Accordion defaultActiveKey="0" key={index}>
-              <Accordion.Item eventKey={index}>
+              <Accordion.Item
+                eventKey={index}
+                className="gify"
+                style={{ backgroundColor: "black" }}
+              >
                 <Accordion.Header>
                   {productData["name"]}{" "}
                   <Badge bg="primary" pill className="mx-3">
